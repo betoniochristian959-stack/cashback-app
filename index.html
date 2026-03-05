@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cashbacker Affiliate Tool</title>
+<link rel="stylesheet" href="./style.css">
+
+<style>
+body{
+font-family: Arial, sans-serif;
+background:#f5f5f5;
+margin:0;
+padding:0;
+}
+.container{
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+.card{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+button{
+padding:10px;
+width:100%;
+margin-top:10px;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
+}
+.convert{background:#00b14f;color:white;}
+.withdraw{background:#ff9800;color:white;}
+.logout{background:#e53935;color:white;}
+.center{text-align:center;}
+.small{font-size:12px;color:gray;}
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- WEBSITE INTRO -->
+<div class="card">
+<h2 class="center">💸 Cashbacker</h2>
+<p class="small center">
+Cashbacker is a simple affiliate tool that helps convert Shopee and TikTok product links into affiliate links.
+Users can click the converted link and purchase directly from Shopee or TikTok.
+</p>
+</div>
+
+<!-- LOGIN -->
+<div class="card">
+<h3>Login</h3>
+<button id="loginBtn">Login with Google</button>
+<button id="logoutBtn" class="logout" style="display:none;">Sign Out</button>
+<p id="user" class="center small"></p>
+</div>
+
+<!-- LINK CONVERTER -->
+<div class="card">
+<h3>Paste Shopee / TikTok Link</h3>
+<input id="linkInput" placeholder="Paste product or shop link">
+<button id="convertBtn" class="convert">Convert Link</button>
+<div id="convertedLink" class="small"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="card">
+<h3>My Clicks & Balance</h3>
+<p>Clicks: <span id="clicks">0</span></p>
+<p>Balance: ₱<span id="cashback">0</span></p>
+<button id="withdrawBtn" class="withdraw">Request Payout</button>
+<p id="withdrawMessage" class="small center"></p>
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- APP JS -->
+<script src="./app.js"></script>
+
+</body>
+</html>
