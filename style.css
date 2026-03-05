@@ -1,0 +1,11 @@
+/* Basic styles */
+body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
+.container { max-width:500px; margin:auto; padding:20px; }
+.card { background:white; padding:20px; margin-bottom:20px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+button { padding:10px; width:100%; margin-top:10px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;}
+.convert { background:#00b14f; color:white;}
+.withdraw { background:#ff9800;color:white;}
+.logout { background:#e53935;color:white;}
+.center { text-align:center;}
+.small { font-size:12px;color:gray;}
+input { width:100%; padding:10px; margin-top:10px; border:1px solid #ccc; border-radius:6px;}
