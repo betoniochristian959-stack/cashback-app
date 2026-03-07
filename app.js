@@ -4,13 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const TIKTOK_AFFILIATE_LINK = "https://vt.tiktok.com/PHLCCP7L9B/";
 
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
+    apiKey: "AIzaSyDp_G_ObIUrq9gExn4vC-2ktVzAlzK7Mn8",
+  authDomain: "cashback-app-13a58.firebaseapp.com",
+  projectId: "cashback-app-13a58",
+  storageBucket: "cashback-app-13a58.firebasestorage.app",
+  messagingSenderId: "66383755540",
+  appId: "1:66383755540:web:b99e5314c14e63d11fea01",
+  measurementId: "G-42JB55KZEQ"
+};
+    
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
@@ -111,3 +113,4 @@ document.addEventListener("DOMContentLoaded", () => {
   updateDashboard();
 
 });
+                          
