@@ -37,30 +37,30 @@ function updateDashboard(){
   clicksEl.textContent = currentUser ? currentUser.clicks : 0;
 }
 
-// Redirect login
-loginBtn.addEventListener("click", ()=>{
+// Login with redirect
+loginBtn.addEventListener("click", () => {
   auth.signInWithRedirect(provider);
 });
 
-// Check result after redirect
-auth.getRedirectResult().then(result=>{
+// Handle redirect result
+auth.getRedirectResult().then(result => {
   if(result.user){
     currentUser = { 
       id: result.user.uid, 
       name: result.user.displayName, 
-      balance:0, 
-      clicks:0 
+      balance: 0, 
+      clicks: 0 
     };
     userEl.textContent = `Welcome ${result.user.displayName}`;
-    loginBtn.style.display="none";
-    logoutBtn.style.display="inline";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline";
 
-    db.collection("users").doc(currentUser.id).get().then(doc=>{
+    db.collection("users").doc(currentUser.id).get().then(doc => {
       if(doc.exists) currentUser = doc.data();
       updateDashboard();
     });
   }
-}).catch(err=>{
+}).catch(err => {
   console.error(err);
   alert("Login failed: " + err.message);
 });
@@ -68,22 +68,22 @@ auth.getRedirectResult().then(result=>{
 // Logout
 logoutBtn.addEventListener("click", ()=>{
   auth.signOut().then(()=>{
-    currentUser=null;
-    userEl.textContent="";
-    loginBtn.style.display="inline";
-    logoutBtn.style.display="none";
+    currentUser = null;
+    userEl.textContent = "";
+    loginBtn.style.display = "inline";
+    logoutBtn.style.display = "none";
     updateDashboard();
   });
 });
 
 // Convert link
-convertBtn.addEventListener("click",()=>{
+convertBtn.addEventListener("click", () => {
   if(!currentUser){ alert("Login first"); return; }
 
   const link = linkInput.value.trim().toLowerCase();
   if(!link){ alert("Paste link"); return; }
 
-  let converted="";
+  let converted = "";
   if(link.includes("shopee")) converted = SHOPEE_AFFILIATE_LINK;
   else if(link.includes("tiktok")) converted = TIKTOK_AFFILIATE_LINK;
   else { alert("Shopee or TikTok only"); return; }
@@ -98,16 +98,17 @@ convertBtn.addEventListener("click",()=>{
 });
 
 // Withdraw demo
-withdrawBtn.addEventListener("click",()=>{
+withdrawBtn.addEventListener("click", () => {
   if(!currentUser){ alert("Login first"); return; }
-  if(currentUser.balance <=0){ withdrawMsg.textContent="No balance"; return; }
+  if(currentUser.balance <= 0){ withdrawMsg.textContent = "No balance"; return; }
 
   const code = prompt("Enter admin code");
   if(code !== "1234"){ alert("Wrong code"); return; }
 
   currentUser.balance = 0;
   updateDashboard();
-  withdrawMsg.textContent="Withdraw approved";
-  db.collection("users").doc(currentUser.id).set(currentUser,{merge:true});
+  withdrawMsg.textContent = "Withdraw approved";
+  db.collection("users").doc(currentUser.id).set(currentUser, {merge:true});
 });
+
 });
