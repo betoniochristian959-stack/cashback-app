@@ -31,14 +31,10 @@ const withdrawMsg = document.getElementById("withdrawMessage");
 let currentUser = null;
 
 // LOGIN
-loginBtn.onclick = () => {
-  auth.signInWithPopup(provider);
-};
+loginBtn.onclick = () => auth.signInWithPopup(provider);
 
 // LOGOUT
-logoutBtn.onclick = () => {
-  auth.signOut();
-};
+logoutBtn.onclick = () => auth.signOut();
 
 // AUTH STATE
 auth.onAuthStateChanged(user => {
@@ -79,7 +75,7 @@ function updateUI() {
   cashbackEl.innerText = currentUser ? currentUser.balance : 0;
 }
 
-// ADD CASHBACK
+// ADD
 addBtn.onclick = () => {
 
   if (!currentUser) return alert("Login first");
