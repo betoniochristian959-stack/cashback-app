@@ -1,9 +1,28 @@
-{
-  "name": "Cashbacker",
-  "short_name": "Cashbacker",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2e7d32",
-  "icons": []
+body{
+font-family:Arial;
+text-align:center;
+background:#f2f2f2;
+padding:40px;
+}
+
+h1{
+color:#ff5722;
+}
+
+input{
+padding:10px;
+width:80%;
+max-width:400px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+margin:10px;
+cursor:pointer;
+}
+
+#convertedLink{
+margin-top:20px;
+font-weight:bold;
 }
