@@ -24,11 +24,13 @@ const withdrawBtn = document.getElementById("withdrawBtn");
 
 const userEl = document.getElementById("user");
 const cashbackEl = document.getElementById("cashback");
+const clicksEl = document.getElementById("clicks");
 const linkInput = document.getElementById("linkInput");
 const convertedLink = document.getElementById("convertedLink");
 const withdrawMsg = document.getElementById("withdrawMessage");
 
 let currentUser = null;
+let lastClick = 0;
 
 // LOGIN
 loginBtn.onclick = () => auth.signInWithPopup(provider);
@@ -44,7 +46,8 @@ auth.onAuthStateChanged(user => {
     currentUser = {
       id: user.uid,
       name: user.displayName,
-      balance: 0
+      balance: 0,
+      clicks: 0
     };
 
     userEl.innerText = "Welcome " + user.displayName;
@@ -73,9 +76,10 @@ auth.onAuthStateChanged(user => {
 // UPDATE UI
 function updateUI() {
   cashbackEl.innerText = currentUser ? currentUser.balance : 0;
+  clicksEl.innerText = currentUser ? currentUser.clicks : 0;
 }
 
-// ADD
+// ADD CASHBACK
 addBtn.onclick = () => {
 
   if (!currentUser) return alert("Login first");
@@ -87,24 +91,43 @@ addBtn.onclick = () => {
   updateUI();
 };
 
-// CONVERT
+// CONVERT LINK (UPDATED)
 convertBtn.onclick = () => {
 
   if (!currentUser) return alert("Login first");
 
-  const link = linkInput.value.toLowerCase();
+  const now = Date.now();
+
+  if (now - lastClick < 3000) {
+    return alert("Wait 3 seconds");
+  }
+
+  lastClick = now;
+
+  const link = linkInput.value.trim().toLowerCase();
+
+  if (!link) return alert("Paste a link");
 
   let result = "";
 
+  const userId = currentUser.id.slice(0,6);
+
   if (link.includes("shopee")) {
-    result = "https://s.shopee.ph/AABBJBucdn";
+    result = `https://s.shopee.ph/AABBJBucdn?ref=${userId}`;
   } 
   else if (link.includes("tiktok")) {
-    result = "https://vt.tiktok.com/PHLCCP7L9B/";
+    result = `https://vt.tiktok.com/PHLCCP7L9B/?ref=${userId}`;
   } 
   else {
     return alert("Invalid link");
   }
+
+  currentUser.balance += 10;
+  currentUser.clicks += 1;
+
+  db.collection("users").doc(currentUser.id).set(currentUser);
+
+  updateUI();
 
   convertedLink.innerHTML = `<a href="${result}" target="_blank">👉 Open Link</a>`;
 };
