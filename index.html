@@ -1,37 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>💰 Cashbacker</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cashbacker App</title>
+
+<link rel="manifest" href="manifest.json" />
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+h2, h3 {
+  text-align: center;
+  margin-top: 0;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.login { background: #4285F4; color: #fff; }
+.add { background: #2e7d32; color: #fff; }
+.convert { background: #ff9800; color: #fff; }
+.withdraw { background: #d32f2f; color: #fff; }
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.center { text-align: center; }
+.small { font-size: 14px; color: #555; }
+</style>
 </head>
+
 <body>
 
-<h1>💰 Cashbacker</h1>
+<div class="container">
 
-<p id="user"></p>
+  <div class="card">
+    <h2>💸 Cashbacker</h2>
+    <button class="login" id="loginBtn">Login with Google</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+    <p id="user" class="center small"></p>
+  </div>
 
-<button id="loginBtn">Login with Google</button>
-<button id="logoutBtn" style="display:none;">Logout</button>
+  <div class="card">
+    <h3>Your Cashback</h3>
+    <h2 class="center">₱<span id="cashback">0</span></h2>
+    <button class="add" id="addBtn">+ ₱10</button>
+  </div>
 
-<hr>
+  <div class="card">
+    <h3>Convert Shopping Link</h3>
+    <input id="linkInput" placeholder="Paste Shopee / TikTok / Lazada link" />
+    <button class="convert" id="convertBtn">Convert Link</button>
+    <p id="convertedLink" class="small"></p>
+  </div>
 
-<h3>Paste Shopee / TikTok Link</h3>
+  <div class="card">
+    <h3>Withdraw Cashback</h3>
+    <button class="withdraw" id="withdrawBtn">Withdraw</button>
+    <p id="withdrawMessage" class="small center"></p>
+  </div>
 
-<input id="linkInput" placeholder="Paste link here">
-<button id="convertBtn">Convert</button>
+</div>
 
-<div id="result"></div>
-
-<hr>
-
-<h3>Dashboard</h3>
-
-<p>Clicks: <span id="clicks">0</span></p>
-<p>Cashback: ₱<span id="balance">0</span></p>
-
-<button id="withdrawBtn">Withdraw</button>
-<p id="msg"></p>
+<p class="center small">© 2026 Cashbacker • Demo App</p>
 
 <script type="module" src="app.js"></script>
-
 </body>
 </html>
