@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cashbacker App</title>
-
-<link rel="manifest" href="manifest.json" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💸 Cashbacker</title>
 
 <style>
 body {
@@ -31,7 +29,6 @@ body {
 
 h2, h3 {
   text-align: center;
-  margin-top: 0;
 }
 
 button {
@@ -42,10 +39,6 @@ button {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-}
-
-button:active {
-  transform: scale(0.97);
 }
 
 .login { background: #4285F4; color: #fff; }
@@ -64,12 +57,14 @@ input {
 .center { text-align: center; }
 .small { font-size: 14px; color: #555; }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
+  <!-- LOGIN -->
   <div class="card">
     <h2>💸 Cashbacker</h2>
     <button class="login" id="loginBtn">Login with Google</button>
@@ -77,29 +72,39 @@ input {
     <p id="user" class="center small"></p>
   </div>
 
+  <!-- CASHBACK -->
   <div class="card">
     <h3>Your Cashback</h3>
     <h2 class="center">₱<span id="cashback">0</span></h2>
     <button class="add" id="addBtn">+ ₱10</button>
   </div>
 
+  <!-- CONVERT -->
   <div class="card">
-    <h3>Convert Shopping Link</h3>
-    <input id="linkInput" placeholder="Paste Shopee / TikTok / Lazada link" />
+    <h3>Convert Link</h3>
+    <input id="linkInput" placeholder="Paste Shopee / TikTok link">
     <button class="convert" id="convertBtn">Convert Link</button>
     <p id="convertedLink" class="small"></p>
   </div>
 
+  <!-- WITHDRAW -->
   <div class="card">
-    <h3>Withdraw Cashback</h3>
+    <h3>Withdraw</h3>
     <button class="withdraw" id="withdrawBtn">Withdraw</button>
     <p id="withdrawMessage" class="small center"></p>
   </div>
 
 </div>
 
-<p class="center small">© 2026 Cashbacker • Demo App</p>
+<p class="center small">© 2026 Cashbacker</p>
 
-<script type="module" src="app.js"></script>
+<!-- 🔥 FIREBASE COMPAT (IMPORTANT) -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+<!-- APP JS -->
+<script src="app.js"></script>
+
 </body>
 </html>
