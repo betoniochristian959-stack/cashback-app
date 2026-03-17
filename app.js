@@ -14,7 +14,7 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// CONFIG MO
+// CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyAxSyj6mPU4oWVmRdH_bUTky7j7A8TMWQw",
   authDomain: "cashbacker-52a60.firebaseapp.com",
@@ -32,98 +32,91 @@ const provider = new GoogleAuthProvider();
 // ELEMENTS
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
-const userEl = document.getElementById("user");
-
-const linkInput = document.getElementById("linkInput");
+const addBtn = document.getElementById("addBtn");
 const convertBtn = document.getElementById("convertBtn");
-const result = document.getElementById("result");
-
-const clicksEl = document.getElementById("clicks");
-const balanceEl = document.getElementById("balance");
-
 const withdrawBtn = document.getElementById("withdrawBtn");
-const msg = document.getElementById("msg");
+
+const userEl = document.getElementById("user");
+const cashbackEl = document.getElementById("cashback");
+const linkInput = document.getElementById("linkInput");
+const convertedLink = document.getElementById("convertedLink");
+const withdrawMsg = document.getElementById("withdrawMessage");
 
 let currentUser = null;
 
 // LOGIN
-loginBtn.onclick = () => {
-  signInWithPopup(auth, provider);
-};
+loginBtn.onclick = () => signInWithPopup(auth, provider);
 
 // LOGOUT
-logoutBtn.onclick = () => {
-  signOut(auth);
-};
+logoutBtn.onclick = () => signOut(auth);
 
 // AUTH STATE
 onAuthStateChanged(auth, async (user) => {
 
   if (user) {
-    currentUser = {
+
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+
+    currentUser = snap.exists() ? snap.data() : {
       id: user.uid,
       name: user.displayName,
-      clicks: 0,
       balance: 0
     };
 
     userEl.innerText = "Welcome " + user.displayName;
 
     loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline";
-
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
-
-    if (snap.exists()) {
-      currentUser = snap.data();
-    }
-
-    updateUI();
+    logoutBtn.style.display = "block";
 
   } else {
 
     currentUser = null;
     userEl.innerText = "";
 
-    loginBtn.style.display = "inline";
+    loginBtn.style.display = "block";
     logoutBtn.style.display = "none";
-
-    updateUI();
   }
+
+  updateUI();
 });
 
 // UPDATE UI
 function updateUI() {
-  clicksEl.innerText = currentUser ? currentUser.clicks : 0;
-  balanceEl.innerText = currentUser ? currentUser.balance : 0;
+  cashbackEl.innerText = currentUser ? currentUser.balance : 0;
 }
 
-// CONVERT
-convertBtn.onclick = async () => {
+// ADD CASHBACK
+addBtn.onclick = async () => {
 
   if (!currentUser) return alert("Login first");
 
-  let link = linkInput.value.toLowerCase();
-
-  let converted = "";
-
-  if (link.includes("shopee")) {
-    converted = "https://s.shopee.ph/AABBJBucdn";
-  } else if (link.includes("tiktok")) {
-    converted = "https://vt.tiktok.com/PHLCCP7L9B/";
-  } else {
-    return alert("Shopee/TikTok only");
-  }
-
-  currentUser.clicks++;
   currentUser.balance += 10;
 
-  updateUI();
-
   await setDoc(doc(db, "users", currentUser.id), currentUser);
+  updateUI();
+};
 
-  result.innerHTML = `<a href="${converted}" target="_blank">👉 Open Link</a>`;
+// CONVERT LINK
+convertBtn.onclick = () => {
+
+  if (!currentUser) return alert("Login first");
+
+  const link = linkInput.value.toLowerCase();
+
+  let result = "";
+
+  if (link.includes("shopee")) {
+    result = "https://s.shopee.ph/AABBJBucdn";
+  } else if (link.includes("tiktok")) {
+    result = "https://vt.tiktok.com/PHLCCP7L9B/";
+  } else if (link.includes("lazada")) {
+    result = "https://www.lazada.com.ph/";
+  } else {
+    return alert("Invalid link");
+  }
+
+  convertedLink.innerHTML = `<a href="${result}" target="_blank">👉 Open Link</a>`;
 };
 
 // WITHDRAW
@@ -132,19 +125,18 @@ withdrawBtn.onclick = async () => {
   if (!currentUser) return alert("Login first");
 
   if (currentUser.balance <= 0) {
-    msg.innerText = "No balance";
+    withdrawMsg.innerText = "No balance";
     return;
   }
 
-  let code = prompt("Enter admin code");
+  const code = prompt("Enter admin code");
 
   if (code !== "1234") return alert("Wrong code");
 
   currentUser.balance = 0;
 
-  updateUI();
-
-  msg.innerText = "Withdraw approved";
-
   await setDoc(doc(db, "users", currentUser.id), currentUser);
+
+  withdrawMsg.innerText = "Withdraw successful";
+  updateUI();
 };
