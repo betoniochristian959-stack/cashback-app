@@ -7,103 +7,73 @@
 
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #e8f5e9, #ffffff);
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 420px;
-  margin: auto;
+  font-family: Arial;
+  background: #f2f2f2;
+  text-align: center;
   padding: 20px;
 }
 
 .card {
   background: #fff;
   padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-h2, h3 {
-  text-align: center;
+  margin: 15px auto;
+  border-radius: 10px;
+  max-width: 400px;
 }
 
 button {
+  padding: 10px;
   width: 100%;
-  padding: 12px;
   margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
   cursor: pointer;
 }
 
-.login { background: #4285F4; color: #fff; }
-.add { background: #2e7d32; color: #fff; }
-.convert { background: #ff9800; color: #fff; }
-.withdraw { background: #d32f2f; color: #fff; }
+.login { background: blue; color: white; }
+.add { background: green; color: white; }
+.convert { background: orange; color: white; }
+.withdraw { background: red; color: white; }
 
 input {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
-
-.center { text-align: center; }
-.small { font-size: 14px; color: #555; }
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
-
-  <!-- LOGIN -->
-  <div class="card">
-    <h2>💸 Cashbacker</h2>
-    <button class="login" id="loginBtn">Login with Google</button>
-    <button id="logoutBtn" style="display:none;">Logout</button>
-    <p id="user" class="center small"></p>
-  </div>
-
-  <!-- CASHBACK -->
-  <div class="card">
-    <h3>Your Cashback</h3>
-    <h2 class="center">₱<span id="cashback">0</span></h2>
-    <button class="add" id="addBtn">+ ₱10</button>
-  </div>
-
-  <!-- CONVERT -->
-  <div class="card">
-    <h3>Convert Link</h3>
-    <input id="linkInput" placeholder="Paste Shopee / TikTok link">
-    <button class="convert" id="convertBtn">Convert Link</button>
-    <p id="convertedLink" class="small"></p>
-  </div>
-
-  <!-- WITHDRAW -->
-  <div class="card">
-    <h3>Withdraw</h3>
-    <button class="withdraw" id="withdrawBtn">Withdraw</button>
-    <p id="withdrawMessage" class="small center"></p>
-  </div>
-
+<div class="card">
+  <h2>💸 Cashbacker</h2>
+  <button class="login" id="loginBtn">Login with Google</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+  <p id="user"></p>
 </div>
 
-<p class="center small">© 2026 Cashbacker</p>
+<div class="card">
+  <h3>Cashback</h3>
+  <h2>₱<span id="cashback">0</span></h2>
+  <button class="add" id="addBtn">+10</button>
+</div>
 
-<!-- 🔥 FIREBASE COMPAT (IMPORTANT) -->
+<div class="card">
+  <h3>Convert Link</h3>
+  <input id="linkInput" placeholder="Paste link here">
+  <button class="convert" id="convertBtn">Convert</button>
+  <p id="convertedLink"></p>
+</div>
+
+<div class="card">
+  <h3>Withdraw</h3>
+  <button class="withdraw" id="withdrawBtn">Withdraw</button>
+  <p id="withdrawMessage"></p>
+</div>
+
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-<!-- APP JS -->
 <script src="app.js"></script>
 
 </body>
