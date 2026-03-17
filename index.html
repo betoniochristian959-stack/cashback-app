@@ -53,12 +53,13 @@ input {
 <div class="card">
   <h3>Cashback</h3>
   <h2>₱<span id="cashback">0</span></h2>
+  <p>Clicks: <span id="clicks">0</span></p>
   <button class="add" id="addBtn">+10</button>
 </div>
 
 <div class="card">
   <h3>Convert Link</h3>
-  <input id="linkInput" placeholder="Paste link here">
+  <input id="linkInput" placeholder="Paste Shopee / TikTok link">
   <button class="convert" id="convertBtn">Convert</button>
   <p id="convertedLink"></p>
 </div>
@@ -69,7 +70,7 @@ input {
   <p id="withdrawMessage"></p>
 </div>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
