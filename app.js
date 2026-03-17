@@ -1,194 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
+// Import Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const SHOPEE_AFFILIATE_LINK = "https://s.shopee.ph/AABBJBucdn";
-const TIKTOK_AFFILIATE_LINK = "https://vt.tiktok.com/PHLCCP7L9B/";
-
+// 🔥 PALITAN MO ITO NG REAL CONFIG MO
 const firebaseConfig = {
-apiKey: "AIzaSyDp_G_ObIUrq9gExn4vC-2ktVzAlzK7Mn8",
-authDomain: "cashback-app-13a58.firebaseapp.com",
-projectId: "cashback-app-13a58",
-storageBucket: "cashback-app-13a58.firebasestorage.app",
-messagingSenderId: "66383755540",
-appId: "1:66383755540:web:b99e5314c14e63d11fea01",
-measurementId: "G-42JB55KZEQ"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "cashbacker-52a60.firebaseapp.com",
+  projectId: "cashbacker-52a60",
+  storageBucket: "cashbacker-52a60.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-const db = firebase.firestore();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
-
+// Button
 const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const linkInput = document.getElementById("linkInput");
-const convertBtn = document.getElementById("convertBtn");
-const convertResult = document.getElementById("convertedLink");
-const cashbackEl = document.getElementById("cashback");
-const withdrawBtn = document.getElementById("withdrawBtn");
-const withdrawMsg = document.getElementById("withdrawMessage");
-const userEl = document.getElementById("user");
-const clicksEl = document.getElementById("clicks");
 
-let currentUser = null;
-
-function updateDashboard(){
-
-cashbackEl.textContent = currentUser ? currentUser.balance : 0;
-clicksEl.textContent = currentUser ? currentUser.clicks : 0;
-
-}
-
-auth.onAuthStateChanged(user => {
-
-if(user){
-
-const uid = user.uid;
-
-currentUser = {
-id: uid,
-name: user.displayName,
-balance: 0,
-clicks: 0
-};
-
-userEl.textContent = "Welcome " + user.displayName;
-
-loginBtn.style.display = "none";
-logoutBtn.style.display = "block";
-
-db.collection("users").doc(uid).get().then(doc => {
-
-if(doc.exists){
-currentUser = doc.data();
-}
-
-updateDashboard();
-
-});
-
-}else{
-
-loginBtn.style.display = "block";
-logoutBtn.style.display = "none";
-
-currentUser = null;
-
-updateDashboard();
-
-}
-
-});
-
+// Login
 loginBtn.addEventListener("click", () => {
-
-auth.signInWithPopup(provider)
-.catch(err => {
-
-console.error(err);
-alert("Login failed");
-
-});
-
-});
-
-logoutBtn.addEventListener("click", () => {
-
-auth.signOut();
-
-});
-
-convertBtn.addEventListener("click", () => {
-
-if(!currentUser){
-
-alert("Please login first");
-
-return;
-
-}
-
-const link = linkInput.value.trim().toLowerCase();
-
-if(!link){
-
-alert("Paste Shopee or TikTok link");
-
-return;
-
-}
-
-let converted = "";
-
-if(link.includes("shopee")){
-
-converted = SHOPEE_AFFILIATE_LINK;
-
-}else if(link.includes("tiktok")){
-
-converted = TIKTOK_AFFILIATE_LINK;
-
-}else{
-
-alert("Only Shopee or TikTok links supported");
-
-return;
-
-}
-
-currentUser.clicks += 1;
-currentUser.balance += 10;
-
-updateDashboard();
-
-db.collection("users").doc(currentUser.id).set(currentUser);
-
-convertResult.innerHTML = `
-<a href="${converted}" target="_blank">
-👉 Open Affiliate Link
-</a>
-`;
-
-});
-
-withdrawBtn.addEventListener("click", () => {
-
-if(!currentUser){
-
-alert("Login first");
-
-return;
-
-}
-
-if(currentUser.balance <= 0){
-
-withdrawMsg.textContent = "No balance";
-
-return;
-
-}
-
-const code = prompt("Enter admin code");
-
-if(code !== "1234"){
-
-alert("Authorization failed");
-
-return;
-
-}
-
-currentUser.balance = 0;
-
-updateDashboard();
-
-withdrawMsg.textContent = "Withdraw approved";
-
-db.collection("users").doc(currentUser.id).set(currentUser);
-
-});
-
-updateDashboard();
-
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      alert("Login success: " + result.user.email);
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+      console.error(error);
+    });
 });
