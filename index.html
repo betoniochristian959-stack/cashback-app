@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cashback App</title>
+  <title>💰 Cashbacker</title>
 </head>
 <body>
 
-<h1>Cashbacker</h1>
+<h1>💰 Cashbacker</h1>
+
+<p id="user"></p>
 
 <button id="loginBtn">Login with Google</button>
+<button id="logoutBtn" style="display:none;">Logout</button>
+
+<hr>
+
+<h3>Paste Shopee / TikTok Link</h3>
+
+<input id="linkInput" placeholder="Paste link here">
+<button id="convertBtn">Convert</button>
+
+<div id="result"></div>
+
+<hr>
+
+<h3>Dashboard</h3>
+
+<p>Clicks: <span id="clicks">0</span></p>
+<p>Cashback: ₱<span id="balance">0</span></p>
+
+<button id="withdrawBtn">Withdraw</button>
+<p id="msg"></p>
 
 <script type="module" src="app.js"></script>
 
